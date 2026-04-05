@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Quiz App admin paneli — soru yönetimi ve istatistikler.">
+  <title>Quiz App — Admin Paneli</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container wide">
+    <div class="user-bar" id="user-bar">
+      <div class="user-bar-info">
+        <div class="user-avatar" id="user-avatar">A</div>
+        <span class="user-name" id="user-name">Admin</span>
+      </div>
+      <div class="user-bar-actions">
+        <a href="quiz.html" class="btn btn-secondary">Quiz Sayfası</a>
+        <button class="btn btn-secondary" id="logout-btn">Çıkış</button>
+      </div>
+    </div>
+
+    <div class="app-header">
+      <h1>⚙️ Admin Paneli</h1>
+      <p>Soruları yönet ve istatistikleri görüntüle</p>
+    </div>
+
+    <!-- Admin Navigation -->
+    <div class="admin-nav" style="flex-wrap: wrap;">
+      <button class="btn btn-primary active" data-section="live-section" id="nav-live">🔴 Canlı Quiz</button>
+      <button class="btn btn-secondary" data-section="questions-section" id="nav-questions">📝 Sorular</button>
+      <button class="btn btn-secondary" data-section="leaderboard-section" id="nav-leaderboard">🏆 Sıralama</button>
+      <button class="btn btn-secondary" data-section="stats-section" id="nav-stats">📊 İstatistikler</button>
+      <button class="btn btn-secondary" data-section="users-section" id="nav-users">👥 Kullanıcılar</button>
+    </div>
+
+    <!-- Live Quiz Section -->
+    <div id="live-section" class="admin-section active">
+      <div class="card" style="text-align:center; padding: 40px 20px;">
+        <h2 style="margin-bottom: 20px; color:var(--error);">🔴 Canlı Quiz Yönetimi</h2>
+        
+        <div style="background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:30px;">
+          <h3 style="font-size:1.1rem; margin-bottom:15px; color:var(--text);">👥 Lobide Bekleyenler (<span id="admin-lobby-count">0</span>)</h3>
+          <div id="admin-lobby-users" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center;">
+            <span style="color:var(--text-muted);">Kimse yok...</span>
+          </div>
+        </div>
+
+        <div style="background:var(--bg-card); border:1px solid var(--border); padding:20px; border-radius:12px;">
+          <h3 style="font-size:1.2rem; margin-bottom:10px;" id="admin-live-status">Durum: Bekleniyor</h3>
+          <div id="admin-live-controls">
+            <button class="btn btn-primary" id="admin-start-quiz" style="font-size:1.2rem; padding:15px 40px;">Bütün Odakla Quizi Başlat 🚀</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaderboard Section -->
+    <div id="leaderboard-section" class="admin-section">
+      <div class="card" style="overflow-x:auto;">
+        <h3 style="font-size:1.1rem; margin-bottom: 20px;">🏆 Genel Sıralama</h3>
+        <div id="admin-leaderboard-loading" class="loading-screen" style="min-height:150px;">
+          <div class="spinner"></div>
+          <p>Sıralama yükleniyor...</p>
+        </div>
+        <table class="leaderboard-table" id="admin-leaderboard-table" style="display:none;">
+          <thead>
+            <tr>
+              <th>Sıra</th>
+              <th>Kullanıcı</th>
+              <th>Puan</th>
+              <th>Tarih</th>
+            </tr>
+          </thead>
+          <tbody id="admin-leaderboard-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Questions Section -->
+    <div id="questions-section" class="admin-section">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h3 style="font-size:1.1rem;">Soru Listesi</h3>
+        <button class="btn btn-primary" id="add-question-btn">+ Yeni Soru</button>
+      </div>
+      <div id="questions-loading" class="loading-screen" style="min-height:150px;">
+        <div class="spinner"></div>
+        <p>Sorular yükleniyor...</p>
+      </div>
+      <div id="questions-list"></div>
+    </div>
+
+    <!-- Stats Section -->
+    <div id="stats-section" class="admin-section">
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-total-users">-</div>
+          <div class="stat-label">Toplam Kullanıcı</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-total-quizzes">-</div>
+          <div class="stat-label">Toplam Quiz</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-avg-score">-</div>
+          <div class="stat-label">Ortalama Puan</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-total-questions">-</div>
+          <div class="stat-label">Toplam Soru</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Users Section -->
+    <div id="users-section" class="admin-section">
+      <div class="card" style="overflow-x:auto;">
+        <div id="users-loading" class="loading-screen" style="min-height:150px;">
+          <div class="spinner"></div>
+          <p>Kullanıcılar yükleniyor...</p>
+        </div>
+        <table class="leaderboard-table" id="users-table" style="display:none;">
+          <thead>
+            <tr>
+              <th>Kullanıcı</th>
+              <th>Rol</th>
+              <th>Kayıt Tarihi</th>
+              <th>Quiz Sayısı</th>
+            </tr>
+          </thead>
+          <tbody id="users-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Question Modal -->
+  <div class="modal-overlay" id="question-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Yeni Soru Ekle</h3>
+        <button class="modal-close" id="modal-close">&times;</button>
+      </div>
+      <form id="question-form">
+        <input type="hidden" id="edit-question-id">
+        <div class="form-group">
+          <label for="q-text">Soru Metni</label>
+          <textarea id="q-text" rows="3" required style="resize:vertical;"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="q-a">A Şıkkı</label>
+          <input type="text" id="q-a" required>
+        </div>
+        <div class="form-group">
+          <label for="q-b">B Şıkkı</label>
+          <input type="text" id="q-b" required>
+        </div>
+        <div class="form-group">
+          <label for="q-c">C Şıkkı</label>
+          <input type="text" id="q-c" required>
+        </div>
+        <div class="form-group">
+          <label for="q-d">D Şıkkı</label>
+          <input type="text" id="q-d" required>
+        </div>
+        <div class="form-group">
+          <label for="q-e">E Şıkkı</label>
+          <input type="text" id="q-e" required>
+        </div>
+        <div class="form-group">
+          <label for="q-correct">Doğru Cevap</label>
+          <select id="q-correct" required>
+            <option value="">Seçiniz</option>
+            <option value="a">A</option>
+            <option value="b">B</option>
+            <option value="c">C</option>
+            <option value="d">D</option>
+            <option value="e">E</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="modal-cancel">İptal</button>
+          <button type="submit" class="btn btn-primary" id="modal-save">Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>

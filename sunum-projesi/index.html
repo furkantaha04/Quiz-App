@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Quiz uygulamasına giriş yapın veya kayıt olun.">
+  <title>Quiz App — Giriş</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="app-container">
+    <div class="app-header">
+      <h1>🧠 Quiz App</h1>
+      <p>Bilgini test et, sıralamanı gör!</p>
+      <div class="developer-badge">
+        ✨ Geliştirici: <span>Hayrunnisa Coşgun & Furkan Taha Timur</span>
+      </div>
+    </div>
+
+    <style>
+      .developer-badge {
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 4px 6px;
+        margin-top: 18px;
+        padding: 10px 16px;
+        background: linear-gradient(135deg, rgba(255, 107, 158, 0.05), rgba(255, 107, 158, 0.15));
+        border: 1px solid rgba(255, 107, 158, 0.3);
+        border-radius: 20px;
+        font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+        font-weight: 600;
+        color: var(--text-secondary);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 107, 158, 0.1);
+        cursor: default;
+        max-width: 95%;
+        line-height: 1.4;
+      }
+
+      .developer-badge span {
+        font-weight: 800;
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .developer-badge::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -150%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8), transparent);
+        animation: shimmerText 3s infinite;
+        transform: skewX(-20deg);
+      }
+
+      .developer-badge:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(255, 107, 158, 0.2);
+        border-color: rgba(255, 107, 158, 0.6);
+      }
+
+      @keyframes shimmerText {
+        0% { left: -150%; }
+        50% { left: 200%; }
+        100% { left: 200%; }
+      }
+    </style>
+
+    <div class="auth-container">
+      <div class="card">
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-tab="login" id="tab-login">Giriş Yap</button>
+          <button class="auth-tab" data-tab="register" id="tab-register">Kayıt Ol</button>
+        </div>
+
+        <div id="alert-box" class="alert"></div>
+
+        <!-- Login Form -->
+        <form id="login-form" class="auth-form active">
+          <div class="form-group">
+            <label for="login-email">E-posta</label>
+            <input type="email" id="login-email" placeholder="ornek@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="login-password">Şifre</label>
+            <input type="password" id="login-password" placeholder="Şifrenizi girin" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="login-btn">Giriş Yap</button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="register-form" class="auth-form">
+          <div class="form-group">
+            <label for="register-username">Kullanıcı Adı</label>
+            <input type="text" id="register-username" placeholder="Kullanıcı adınız" required>
+          </div>
+          <div class="form-group">
+            <label for="register-email">E-posta</label>
+            <input type="email" id="register-email" placeholder="ornek@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="register-password">Şifre</label>
+            <input type="password" id="register-password" placeholder="En az 6 karakter" required minlength="6">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="register-btn">Kayıt Ol</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/auth.js"></script>
+</body>
+
+</html>

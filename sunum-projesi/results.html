@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Quiz sonuçları ve genel sıralama tablosu.">
+  <title>Quiz App — Sonuçlar</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <div class="user-bar" id="user-bar">
+      <div class="user-bar-info">
+        <div class="user-avatar" id="user-avatar">?</div>
+        <span class="user-name" id="user-name">Yükleniyor...</span>
+      </div>
+      <div class="user-bar-actions">
+        <a href="quiz.html" class="btn btn-primary" style="font-size:0.85rem; padding:8px 16px;">Quiz Sayfasına Dön</a>
+        <button class="btn btn-secondary" id="logout-btn">Çıkış</button>
+      </div>
+    </div>
+
+    <!-- Result Hero (shown after quiz) -->
+    <div id="result-hero" class="card result-hero" style="display:none;">
+      <div class="result-score-circle">
+        <div class="result-score-number" id="final-score">0</div>
+        <div class="result-score-label">PUAN</div>
+      </div>
+      <div class="result-message" id="result-message">Harika!</div>
+      <div class="result-subtitle" id="result-subtitle">10 sorudan 0 tanesini doğru cevapladın.</div>
+    </div>
+
+    <!-- Leaderboard -->
+    <div class="card">
+      <h2 class="card-title">🏆 Genel Sıralama</h2>
+      <div id="leaderboard-loading" class="loading-screen" style="min-height:150px;">
+        <div class="spinner"></div>
+        <p>Sıralama yükleniyor...</p>
+      </div>
+      <div id="leaderboard-container" style="display:none; overflow-x:auto;">
+        <table class="leaderboard-table" id="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Sıra</th>
+              <th>Kullanıcı</th>
+              <th>Puan</th>
+              <th>Tarih</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-body"></tbody>
+        </table>
+      </div>
+      <p id="leaderboard-empty" style="display:none; text-align:center; color:var(--text-muted); padding:40px 0;">Henüz kimse quiz çözmemiş. İlk sen ol! 🚀</p>
+    </div>
+  </div>
+
+  <script type="module" src="js/results.js"></script>
+</body>
+</html>
